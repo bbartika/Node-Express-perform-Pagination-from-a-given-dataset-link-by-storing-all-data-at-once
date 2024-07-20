@@ -1,0 +1,30 @@
+1.Access the pagination data
+GET http://localhost:3000/users?page=1&limit=5
+
+2.Create a new user
+POST http://localhost:3000/users
+Body: {
+    "name": "New User",
+    "username": "newuser",
+    "email": "newuser@example.com",
+    "address": {
+        "street": "123 Main St",
+        "suite": "Apt 1",
+        "city": "Somewhere",
+        "zipcode": "12345",
+        "geo": {
+            "lat": "40.7128",
+            "lng": "74.0060"
+        }
+    },
+    "phone": "555-5555",
+    "website": "newuser.com",
+    "company": {
+        "name": "New Company",
+        "catchPhrase": "Innovate and Lead",
+        "bs": "market-disrupting solutions"
+    }
+}
+
+3.Delete a user
+DELETE http://localhost:3000/users/1
