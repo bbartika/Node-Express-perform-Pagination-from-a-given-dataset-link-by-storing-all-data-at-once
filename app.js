@@ -118,6 +118,39 @@ app.delete('/users/:id', async (req, res) => {
     }
 });
 
+// Route to update a user by ID
+app.put('/users/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name, username, email, address, phone, website, company } = req.body;
+    try {
+        const user = await User.findOne({ where: { id } });
+        if (user) {
+            user.name = name;
+            user.username = username;
+            user.email = email;
+            user.address_street = address.street;
+            user.address_suite = address.suite;
+            user.address_city = address.city;
+            user.address_zipcode = address.zipcode;
+            user.address_geo_lat = address.geo.lat;
+            user.address_geo_lng = address.geo.lng;
+            user.phone = phone;
+            user.website = website;
+            user.company_name = company.name;
+            user.company_catchPhrase = company.catchPhrase;
+            user.company_bs = company.bs;
+
+            await user.save();
+            res.status(200).json(user);
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).send('Server error');
+    }
+});
+
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
 });
