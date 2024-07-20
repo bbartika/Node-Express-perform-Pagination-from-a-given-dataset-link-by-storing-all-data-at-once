@@ -28,3 +28,28 @@ Body: {
 
 3.Delete a user
 DELETE http://localhost:3000/users/1
+
+4.Update a user
+PUT http://localhost:3000/users/1
+Body: {
+    "name": "Updated Name",
+    "username": "updatedusername",
+    "email": "updatedemail@example.com",
+    "address": {
+        "street": "Updated Street",
+        "suite": "Updated Suite",
+        "city": "Updated City",
+        "zipcode": "Updated Zipcode",
+        "geo": {
+            "lat": "40.7128",
+            "lng": "74.0060"
+        }
+    },
+    "phone": "555-5555",
+    "website": "updatedwebsite.com",
+    "company": {
+        "name": "Updated Company",
+        "catchPhrase": "Updated CatchPhrase",
+        "bs": "Updated BS"
+    }
+}
