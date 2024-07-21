@@ -6,6 +6,8 @@ const User = require('./models/user');
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+
 // Sync the database and initialize the table
 async function initializeDatabase() {
     try {
@@ -74,32 +76,70 @@ app.get('/users', async (req, res) => {
     }
 });
 
+// Route to get a single user by ID
+app.get('/users/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await User.findOne({ where: { id } });
+        if (user) {
+            res.json(user);
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).send('Server error');
+    }
+});
+
+
 // Route to create a new user
 app.post('/users', async (req, res) => {
-    const { name, username, email, address, phone, website, company } = req.body;
+    const {
+        name,
+        username,
+        email,
+        address: {
+            street,
+            suite,
+            city,
+            zipcode,
+            geo: { lat, lng }
+        },
+        phone,
+        website,
+        company: {
+            name: companyName,
+            catchPhrase,
+            bs
+        }
+    } = req.body;
+
     try {
         const newUser = await User.create({
             name,
             username,
             email,
-            address_street: address.street,
-            address_suite: address.suite,
-            address_city: address.city,
-            address_zipcode: address.zipcode,
-            address_geo_lat: address.geo.lat,
-            address_geo_lng: address.geo.lng,
+            address_street: street,
+            address_suite: suite,
+            address_city: city,
+            address_zipcode: zipcode,
+            address_geo_lat: lat,
+            address_geo_lng: lng,
             phone,
             website,
-            company_name: company.name,
-            company_catchPhrase: company.catchPhrase,
-            company_bs: company.bs,
+            company_name: companyName,
+            company_catchPhrase: catchPhrase,
+            company_bs: bs,
         });
+        console.log('New user created:', newUser); // Log new user data
         res.status(201).json(newUser);
     } catch (error) {
         console.error('Error creating user:', error);
         res.status(500).send('Server error');
     }
 });
+
 
 // Route to delete a user by ID
 app.delete('/users/:id', async (req, res) => {
