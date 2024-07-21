@@ -29,27 +29,34 @@ Body: {
 3.Delete a user
 DELETE http://localhost:3000/users/1
 
-4.Update a user
-PUT http://localhost:3000/users/1
-Body: {
-    "name": "Updated Name",
-    "username": "updatedusername",
-    "email": "updatedemail@example.com",
+
+4. Update the user by ID (PUT):
+
+    URL: http://localhost:3000/users/1 (replace 1 with the actual user ID)
+    Method: PUT
+    Body (JSON):
+
+json
+
+{
+    "name": "Jane Doe Updated",
+    "username": "jdoe_updated",
+    "email": "jane.doe.updated@example.com",
     "address": {
-        "street": "Updated Street",
-        "suite": "Updated Suite",
-        "city": "Updated City",
-        "zipcode": "Updated Zipcode",
+        "street": "456 Another St",
+        "suite": "Apt 2",
+        "city": "Othertown",
+        "zipcode": "67890",
         "geo": {
-            "lat": "40.7128",
-            "lng": "74.0060"
+            "lat": "40.7130",
+            "lng": "-74.0070"
         }
     },
-    "phone": "555-5555",
-    "website": "updatedwebsite.com",
+    "phone": "555-5678",
+    "website": "jane.updated.example.com",
     "company": {
-        "name": "Updated Company",
-        "catchPhrase": "Updated CatchPhrase",
-        "bs": "Updated BS"
+        "name": "Jane's Updated Company",
+        "catchPhrase": "Innovation for the present",
+        "bs": "enterprise updated solutions"
     }
 }
